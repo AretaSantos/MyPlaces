@@ -108,15 +108,6 @@ const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
     },
-    loginRegisterBtn: {
-      width: "40%",
-      borderRadius: 20,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 20,
-      backgroundColor: "black"
-    },
     texts: {
         color: "white",
         fontFamily: "Roboto"
@@ -125,16 +116,6 @@ const styles = StyleSheet.create({
       fontFamily: "Roboto",
       fontSize: 20,
       marginBottom: 30,
-    },
-    loginBtn: {
-      width: "40%",
-      borderRadius: 20,
-      borderColor: "black",
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 10,
-      backgroundColor: "black",
     },
     loginInputView: {
       backgroundColor: "#fff",

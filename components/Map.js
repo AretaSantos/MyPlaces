@@ -4,7 +4,7 @@ import { StyleSheet, View, TextInput, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
 
-export default function Map({ route, navigation }) {
+export default function Map({ navigation, route }) {
 
     const [address, setAddress] = useState('')
     const [region, setRegion] = useState({
@@ -34,8 +34,6 @@ export default function Map({ route, navigation }) {
 
     };
 
-   
-    
     const findAddress = () => {
         fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=ixMEZGgVl3Hjm8p1thoXMyriG0i1xLHf&location=${address}`)
             .then(response => response.json())
@@ -45,13 +43,13 @@ export default function Map({ route, navigation }) {
                     latitude: responseJson.results[0].locations[0].latLng.lat,
                     longitude: responseJson.results[0].locations[0].latLng.lng
                 })
-                )
-                
+            )
+
             .catch(error => {
                 Alert.alert('Error', error);
             }
             );
-            setAddress('');
+        setAddress('');
     }
 
 
@@ -65,18 +63,31 @@ export default function Map({ route, navigation }) {
             />
             <MapView style={{ flex: 1 }}
                 region={region}>
-                <Marker 
-                coordinate={{
-                    latitude: region.latitude,
-                    longitude: region.longitude
-                }}
-                 />
+                <Marker
+                    coordinate={{
+                        latitude: region.latitude,
+                        longitude: region.longitude
+                    }}
+                />
             </MapView>
             <TextInput
                 textAlign={'center'}
                 placeholder="address"
                 onChangeText={address => setAddress(address)} />
-            <Button title="find" onPress={findAddress}
+            <Button title="find address" onPress={findAddress}
+                icon={{
+                    name: "arrow-right",
+                    size: 15,
+                    color: "white"
+                }}
+                buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
+                titleStyle={{ color: 'white' }} />
+            <Button title="show my place" onPress={findMyPlace}
+                icon={{
+                    name: "arrow-right",
+                    size: 15,
+                    color: "white"
+                }}
                 buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
                 titleStyle={{ color: 'white' }} />
             <StatusBar style="auto" />

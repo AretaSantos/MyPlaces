@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 import firebaseConfig from './firebaseConfig';
 import { Alert } from 'react-native';
 import { userStore } from './UserReducer';
-
+import Map from './Map';
 
 export default function Myplaces({ route, navigation }) {
 
@@ -47,7 +47,7 @@ export default function Myplaces({ route, navigation }) {
 
         }
         else {
-            Alert.alert('Error', 'Type product title and address first')
+            Alert.alert('Error', 'Type title and address first')
         }
     }
 
@@ -64,16 +64,6 @@ export default function Myplaces({ route, navigation }) {
             })
         })
     }
-    /*
-    const renderItem = ({ item }) => (
-        <ListItem bottomDivider>
-            <ListItem.Content>
-                <ListItem.Title>{item.title}</ListItem.Title>
-                <ListItem.Subtitle>{item.address}</ListItem.Subtitle>
-            </ListItem.Content>
-        </ListItem>
-    )*/
-
 
     return (
         <View style={styles.container}>
@@ -90,12 +80,7 @@ export default function Myplaces({ route, navigation }) {
                 title="save"
                 buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)', margin: 20 }}
                 titleStyle={{ color: 'white' }} />
-            {/*<FlatList 
-                data={places}
-                renderItem={renderItem}
-           keyExtractor={(item , index) => index.toString()}/>*/}
             <FlatList
-                style={styles.list}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) =>
                     <View>
@@ -113,7 +98,8 @@ export default function Myplaces({ route, navigation }) {
                                 title="show on map"
                                 onPress={() => navigation.navigate({
                                     name: 'Map',
-                                    params: { address }
+                                    params: { myAddress: item.address }
+                                    
                                 }
                                 )}
                             />

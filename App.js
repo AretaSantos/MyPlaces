@@ -71,13 +71,11 @@ export default function App() {
 
   const [isSigned, setIsSigned] = useState(false);
 
-  // Update state from redux
   store.subscribe(() => {
     setIsSigned(store.getState());
   })
 
-  return (
-    // Check if 'isSigned' is true and change the path from 'Login' to 'Search' if true    
+  return (  
     <NavigationContainer>
       {isSigned ? <MainStackNavigator /> : <AuthStack />}
     </NavigationContainer>

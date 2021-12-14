@@ -1,13 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import { StyleSheet, View, TextInput, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
 
-export default function Map({ navigation }) {
+export default function Map({ route, navigation }) {
 
-    const [location, setLocation] = useState(null);
     const [address, setAddress] = useState('')
     const [region, setRegion] = useState({
         latitude: 60.200692,
@@ -17,23 +15,27 @@ export default function Map({ navigation }) {
     })
 
     useEffect(() => {
-        (async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                Alert.alert('No permission to get location')
-                return;
-            }
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-            setRegion({
-                ...region,
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude
-            })
-
-        })();
+        findMyPlace();
     }, []);
 
+    const findMyPlace = async () => {
+        try {
+            let place = route.params.myAddress
+            let response = await fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=ixMEZGgVl3Hjm8p1thoXMyriG0i1xLHf&location=${place}`)
+            let json = await response.json();
+            setRegion({
+                ...region,
+                latitude: json.results[0].locations[0].latLng.lat,
+                longitude: json.results[0].locations[0].latLng.lng
+            })
+        } catch (e) {
+            console.log('Error');
+        }
+
+    };
+
+   
+    
     const findAddress = () => {
         fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=ixMEZGgVl3Hjm8p1thoXMyriG0i1xLHf&location=${address}`)
             .then(response => response.json())
@@ -42,11 +44,16 @@ export default function Map({ navigation }) {
                     ...region,
                     latitude: responseJson.results[0].locations[0].latLng.lat,
                     longitude: responseJson.results[0].locations[0].latLng.lng
-                }))
+                })
+                )
+                
             .catch(error => {
                 Alert.alert('Error', error);
-            });
+            }
+            );
+            setAddress('');
     }
+
 
     return (
         <View style={styles.container}>
@@ -58,10 +65,12 @@ export default function Map({ navigation }) {
             />
             <MapView style={{ flex: 1 }}
                 region={region}>
-                <Marker coordinate={{
+                <Marker 
+                coordinate={{
                     latitude: region.latitude,
                     longitude: region.longitude
-                }} />
+                }}
+                 />
             </MapView>
             <TextInput
                 textAlign={'center'}

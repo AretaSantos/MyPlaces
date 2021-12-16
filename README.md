@@ -4,3 +4,7 @@ An application that stores your locations and addressess in firebase and can be 
 
 Autehtication with firebase.
 
+Built with :
+
+expo, react native, firebase
+

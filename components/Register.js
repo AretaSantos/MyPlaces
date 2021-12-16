@@ -3,6 +3,7 @@ import { Text, View, TextInput, Alert, TouchableOpacity, StyleSheet } from "reac
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import firebaseConfig from './firebaseConfig';
 import { initializeApp } from 'firebase/app';
+import { Button } from 'react-native-elements';
 
 
 initializeApp(firebaseConfig);
@@ -63,56 +64,48 @@ export default function Register({ navigation }) {
           style={styles.registerInput}
         />
       </View>
-      <TouchableOpacity onPress={createNewUser} style={styles.registerBtn}>
-        <Text style={styles.texts}>Create user</Text>
-      </TouchableOpacity>
+      <Button
+        onPress={createNewUser}
+        title="Create user"
+        buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
+        titleStyle={{ color: 'white' }} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
 
-registerContainer: {
-  flex: 1,
-  backgroundColor: "#fff",
-  alignItems: "center",
-  justifyContent: "center",
-},
-registerTitle: {
-  fontFamily: 'Roboto',
-  fontSize: 20,
-  marginBottom: 30,
-},
-registerBtn: {
-  width: "40%",
-  borderRadius: 25,
-  height: 50,
-  alignItems: "center",
-  justifyContent: "center",
-  marginTop: 10,
-  backgroundColor: "black",
-  
-},
-registerInputView: {
-  backgroundColor: "#fff",
-  borderRadius: 5,
-  width: "70%",
-  height: 45,
-  marginBottom: 20,
-  alignItems: "center",
-  borderWidth: 1,
-  borderColor: 'black',
-},
-registerTextInput: {
-  height: 50,
-  flex: 1,
-  padding: 10,
-  textAlign: 'center',
-},
-registerInput: {
-  height: 50,
-  flex: 1,
-  padding: 10,
-},
+  registerContainer: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  registerTitle: {
+    fontFamily: 'Roboto',
+    fontSize: 20,
+    marginBottom: 30,
+  },
+  registerInputView: {
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    width: "70%",
+    height: 45,
+    marginBottom: 20,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  registerTextInput: {
+    height: 50,
+    flex: 1,
+    padding: 10,
+    textAlign: 'center',
+  },
+  registerInput: {
+    height: 50,
+    flex: 1,
+    padding: 10,
+  },
 
 });

@@ -99,7 +99,7 @@ export default function Myplaces({ route, navigation }) {
                                 onPress={() => navigation.navigate({
                                     name: 'Map',
                                     params: { myAddress: item.address }
-                                    
+
                                 }
                                 )}
                             />
@@ -127,9 +127,9 @@ export default function Myplaces({ route, navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'space-between',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'space-between',
     },
 });

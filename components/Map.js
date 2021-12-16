@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 export default function Map({ navigation, route }) {
 
+    const [location, setLocation] = useState(null);
     const [address, setAddress] = useState('')
     const [region, setRegion] = useState({
         latitude: 60.200692,
@@ -15,7 +17,21 @@ export default function Map({ navigation, route }) {
     })
 
     useEffect(() => {
-        findMyPlace();
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                Alert.alert('No permission to get location')
+                return;
+            }
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
+            setRegion({
+                ...region,
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude
+            })
+
+        })();
     }, []);
 
     const findMyPlace = async () => {
@@ -33,6 +49,7 @@ export default function Map({ navigation, route }) {
         }
 
     };
+
 
     const findAddress = () => {
         fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=ixMEZGgVl3Hjm8p1thoXMyriG0i1xLHf&location=${address}`)
